@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Test {
 
-    private static final int TEST_SCALE = 1000000;
+    private static final int TEST_SCALE = 100000;
 
     private static final int MODE_THREAD = 0;
     private static final int MODE_DEFAULT = 1;
@@ -17,11 +17,10 @@ public class Test {
     private static Integer[] mInts = new Integer[TEST_SCALE];
 
     public static void main(String[] args) {
-        for (int i = 0; i < TEST_SCALE; i++) {
-            mInts[i] = new Random().nextInt();
-          //  mInts[i] = i;
-        }
-        doTest(MODE_THREAD);
+        mInts = getRandomArr();
+        //mInts = getSortArr();
+        //new Thread(() ->doTest(MODE_DEFAULT)).start();
+        new Thread(() ->doTest(MODE_THREAD)).start();
     }
 
     private static void doTest(int mode) {
@@ -29,42 +28,64 @@ public class Test {
         MergeSort mergeSort = new MergeSort(mInts);
         SelectionSort selectionSort = new SelectionSort(mInts);
         InsertionSort insertionSort = new InsertionSort(mInts);
+        ShellSort shellSort = new ShellSort(mInts);
 
         switch (mode) {
             case MODE_CHECK:
-                bubbleSort.sort();
-                bubbleSort.sout();
-
-                mergeSort.sort();
-                mergeSort.sout();
-
-                selectionSort.sort();
-                selectionSort.sout();
-
-                insertionSort.sort();
-                insertionSort.sout();
+                bubbleSort.printSort();
+                mergeSort.printSort();
+                selectionSort.printSort();
+                insertionSort.printSort();
+                shellSort.printSort();
                 break;
             case MODE_THREAD:
-                new Thread(() -> System.out.println("bubble time: " + bubbleSort.sort() + "ms")).start();
-
-                new Thread(() -> System.out.println("merge time: " + mergeSort.sort() + "ms")).start();
-
-                new Thread(() -> {
-                    //与bubble一样都是 O(n^2) 但是减少了swap的操作次数
-                    System.out.println("selection time: " + selectionSort.sort() + "ms");
-                }).start();
-
-                new Thread(() -> {
-                    //最好 O(n) 平均 O(n^2) 但是是 in-place 的，只需 O(1) 的额外空间
-                    System.out.println("insertion time:" + insertionSort.sort() + "ms");
-                }).start();
+                new Thread(() -> printTime(bubbleSort)).start();
+                new Thread(() -> printTime(mergeSort)).start();
+                new Thread(() -> printTime(selectionSort)).start();
+                new Thread(() -> printTime(insertionSort)).start();
+                new Thread(() -> printTime(shellSort)).start();
                 break;
             case MODE_DEFAULT:
-                System.out.println("bubble time: " + bubbleSort.sort() + "ms");
-                System.out.println("merge time: " + mergeSort.sort() + "ms");
-                System.out.println("selection time: " + selectionSort.sort() + "ms");
-                System.out.println("insertion time:" + insertionSort.sort() + "ms");
+                long bubbleSortTime = bubbleSort.sort();
+                new Thread(() -> printMultiple(mergeSort, bubbleSortTime)).start();
+                new Thread(() -> printMultiple(insertionSort, bubbleSortTime)).start();
+                new Thread(() -> printMultiple(selectionSort, bubbleSortTime)).start();
+                new Thread(() -> printMultiple(shellSort, bubbleSortTime)).start();
+                //最好 O(n) 平均 O(n^2) 但是是 in-place 的，只需 O(1) 的额外空间，输入敏感
+                //与bubble一样都是 O(n^2) 但是减少了swap的操作次数
+                //插入排序的优化版本
                 break;
         }
     }
+
+    private static void printTime(Sort sort) {
+        System.out.println(sort.getClass().getName() + " ===> " + sort.sort() + " ms");
+    }
+
+    private static void printMultiple(Sort sort, long index) {
+        long comp = sort.sort();
+        if (comp == 0) {
+            System.out.println(sort.getClass().getName() + " is too fast");
+            return;
+        }
+        double multiple = index / comp;
+        System.out.println(sort.getClass().getName() + " " + multiple + "X faster than bubble");
+    }
+
+    private static Integer[] getRandomArr() {
+        Integer[] arr = new Integer[TEST_SCALE];
+        for (int i = 0; i < TEST_SCALE; i++) {
+            arr[i] = new Random().nextInt();
+        }
+        return arr;
+    }
+
+    private static Integer[] getSortArr() {
+        Integer[] arr = new Integer[TEST_SCALE];
+        for (int i = 0; i < TEST_SCALE; i++) {
+            arr[i] = i;
+        }
+        return arr;
+    }
+
 }

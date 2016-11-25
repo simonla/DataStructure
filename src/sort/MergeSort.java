@@ -4,16 +4,16 @@ package sort;
  * Created by simonla on 2016/11/20.
  * Have a good day!
  */
-public class MergeSort {
-    private Integer[] mInts;
+public class MergeSort extends Sort {
 
-    public MergeSort(Integer[] ints) {
-        mInts = ints;
+    public MergeSort(Integer[] integers) {
+        super(integers);
     }
 
+    @Override
     public long sort() {
         long t1 = System.currentTimeMillis();
-        mergeSort(0, mInts.length - 1);
+        mergeSort(0, mLen - 1);
         long t2 = System.currentTimeMillis();
         return t2 - t1;
     }
@@ -24,10 +24,6 @@ public class MergeSort {
         mergeSort(lo, mi);
         mergeSort(mi, hi);
         merge(lo, mi, hi);
-    }
-
-    public Integer[] getInts() {
-        return mInts;
     }
 
     private void merge(int lo, int mi, int hi) {
@@ -41,9 +37,4 @@ public class MergeSort {
         }
     }
 
-    public void sout() {
-        for (Integer mInt : mInts) {
-            System.out.println("归并排序："+mInt);
-        }
-    }
 }
