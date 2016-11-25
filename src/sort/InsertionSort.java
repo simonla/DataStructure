@@ -1,43 +1,47 @@
 package sort;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * Created by simonla on 2016/11/21.
  * Have a good day!
  */
 public class InsertionSort {
     private Integer[] mIntegers;
-    private ArrayList<Integer> mList;
 
     public InsertionSort(Integer[] integers) {
         mIntegers = integers;
     }
 
     public long sort() {
-        mList = new ArrayList<>();
-        Collections.addAll(mList, mIntegers);
         long t1 = System.currentTimeMillis();
-        for (int i = 1; i < mList.size(); i++) {
-            int target = mList.get(i);
-            int rank = search(i,target);
-            mList.remove(i);
-            mList.add(rank,target);
+        for (int i = 1; i < mIntegers.length; i++) {
+            int target = mIntegers[i];
+            if(target>mIntegers[i-1]) continue;
+            int search = search(0, i, target);//在有序的部分寻找插入位置
+            move(search, i);//腾出位置
+            mIntegers[search] = target;
         }
         long t2 = System.currentTimeMillis();
         return t2 - t1;
     }
 
-    private int search(int i, int target) {
-        int j ;
-        for (j=0; j < i; j++) {
-            if (target<mList.get(j)) break;
+    private void move(int lo, int hi) {
+        System.arraycopy(mIntegers, lo, mIntegers, lo + 1, hi - lo);
+    }
+
+    private int search(int lo, int hi,int target) {
+        for (int i = lo; i < hi; i++) {
+            if(mIntegers[i]>target) return i;
         }
-        return j;
+        return hi;
     }
 
     public Integer[] getIntegers() {
         return mIntegers;
+    }
+
+    public void sout() {
+        for (Integer mInt : mIntegers) {
+            System.out.println("插入排序："+mInt);
+        }
     }
 }

@@ -40,4 +40,10 @@ public class MergeSort {
             if (lc <= k || B[j] <= mInts[lb + k]) mInts[i++] = B[j++];
         }
     }
+
+    public void sout() {
+        for (Integer mInt : mInts) {
+            System.out.println("归并排序："+mInt);
+        }
+    }
 }

@@ -29,4 +29,10 @@ public class BubbleSort {
     public Integer[] getInts() {
         return mInts;
     }
+
+    public void sout() {
+        for (Integer mInt : mInts) {
+            System.out.println("冒泡排序："+mInt);
+        }
+    }
 }
