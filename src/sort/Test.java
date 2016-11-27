@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Test {
 
-    private static final int TEST_SCALE = 100000;
+    private static final int TEST_SCALE = 10000;
 
     private static final int MODE_THREAD = 0;
     private static final int MODE_DEFAULT = 1;
@@ -20,7 +20,7 @@ public class Test {
         mInts = getRandomArr();
         //mInts = getSortArr();
         //new Thread(() ->doTest(MODE_DEFAULT)).start();
-        new Thread(() ->doTest(MODE_THREAD)).start();
+        new Thread(() -> doTest(MODE_THREAD)).start();
     }
 
     private static void doTest(int mode) {
@@ -32,11 +32,11 @@ public class Test {
 
         switch (mode) {
             case MODE_CHECK:
-                bubbleSort.printSort();
-                mergeSort.printSort();
-                selectionSort.printSort();
-                insertionSort.printSort();
-                shellSort.printSort();
+                bubbleSort.check();
+                mergeSort.check();
+                selectionSort.check();
+                insertionSort.check();
+                shellSort.check();
                 break;
             case MODE_THREAD:
                 new Thread(() -> printTime(bubbleSort)).start();
@@ -59,7 +59,7 @@ public class Test {
     }
 
     private static void printTime(Sort sort) {
-        System.out.println(sort.getClass().getName() + " ===> " + sort.sort() + " ms");
+        System.out.println(sort.getClass().getName() + " ===> " + sort.sort() + " ms" + " check: " + sort.check());
     }
 
     private static void printMultiple(Sort sort, long index) {
@@ -75,7 +75,7 @@ public class Test {
     private static Integer[] getRandomArr() {
         Integer[] arr = new Integer[TEST_SCALE];
         for (int i = 0; i < TEST_SCALE; i++) {
-            arr[i] = new Random().nextInt();
+            arr[i] = new Random().nextInt(100000);
         }
         return arr;
     }

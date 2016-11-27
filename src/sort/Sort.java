@@ -52,6 +52,18 @@ abstract class Sort {
         return hi;
     }
 
+    boolean check() {
+        sort();
+        boolean flag = true;
+        for (int i = 0; i < mLen - 1; i++) {
+            if (mInts[i + 1] - mInts[i] < 0) {
+                flag = false;
+                System.out.println(this.getClass().getName() + mInts[i] + " - " + mInts[i + 1] + " = " + (mInts[i] - mInts[i + 1]));
+            }
+        }
+        return flag;
+    }
+
     void moveOneStep(int lo, int hi) {
         System.arraycopy(mInts, lo, mInts, lo + 1, hi - lo);
     }
