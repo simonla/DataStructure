@@ -15,9 +15,10 @@ class InsertionSort extends Sort {
         long t1 = System.currentTimeMillis();
         for (int i = 1; i < mLen; i++) {
             for (int j = i; j > 0 && less(j, j - 1); j--) {
-                int target = mInts[i];
-                int result = search(0, j, target);
-                moveOneStep(result, j);
+                //swap(j, j - 1);
+                int target = mInts[j];
+                int result = search(0, j-1, target);
+                moveOneStep(result, j-1);
                 mInts[result] = target;
             }
         }

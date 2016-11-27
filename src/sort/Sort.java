@@ -33,7 +33,7 @@ abstract class Sort {
     }
 
     boolean less(int i, int j) {
-        return mInts[i] < mInts[j];
+        return mInts[i].compareTo(mInts[j]) < 0;
     }
 
     //可以优化到 O(logN)
@@ -56,16 +56,16 @@ abstract class Sort {
         sort();
         boolean flag = true;
         for (int i = 0; i < mLen - 1; i++) {
-            if (mInts[i + 1] - mInts[i] < 0) {
+            if (less(i + 1, i)) {
                 flag = false;
-                System.out.println(this.getClass().getName() + mInts[i] + " - " + mInts[i + 1] + " = " + (mInts[i] - mInts[i + 1]));
+                System.out.println(this.getClass().getName() + " " + mInts[i] + " - " + mInts[i + 1] + " = " + ((mInts[i]) - (mInts[i + 1])));
             }
         }
         return flag;
     }
 
     void moveOneStep(int lo, int hi) {
-        System.arraycopy(mInts, lo, mInts, lo + 1, hi - lo);
+        System.arraycopy(mInts, lo, mInts, lo + 1, hi + 1 - lo);
     }
 
 }

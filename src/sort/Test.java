@@ -25,7 +25,7 @@ public class Test {
 
     private static void doTest(int mode) {
         BubbleSort bubbleSort = new BubbleSort(mInts);
-        MergeSort mergeSort = new MergeSort(mInts);
+        //MergeSort mergeSort = new MergeSort(mInts);
         SelectionSort selectionSort = new SelectionSort(mInts);
         InsertionSort insertionSort = new InsertionSort(mInts);
         ShellSort shellSort = new ShellSort(mInts);
@@ -33,21 +33,21 @@ public class Test {
         switch (mode) {
             case MODE_CHECK:
                 bubbleSort.check();
-                mergeSort.check();
+                //mergeSort.check();
                 selectionSort.check();
                 insertionSort.check();
                 shellSort.check();
                 break;
             case MODE_THREAD:
                 new Thread(() -> printTime(bubbleSort)).start();
-                new Thread(() -> printTime(mergeSort)).start();
+                //new Thread(() -> printTime(mergeSort)).start();
                 new Thread(() -> printTime(selectionSort)).start();
                 new Thread(() -> printTime(insertionSort)).start();
                 new Thread(() -> printTime(shellSort)).start();
                 break;
             case MODE_DEFAULT:
                 long bubbleSortTime = bubbleSort.sort();
-                new Thread(() -> printMultiple(mergeSort, bubbleSortTime)).start();
+                //new Thread(() -> printMultiple(mergeSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(insertionSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(selectionSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(shellSort, bubbleSortTime)).start();
@@ -75,7 +75,7 @@ public class Test {
     private static Integer[] getRandomArr() {
         Integer[] arr = new Integer[TEST_SCALE];
         for (int i = 0; i < TEST_SCALE; i++) {
-            arr[i] = new Random().nextInt(100000);
+            arr[i] = new Random().nextInt(TEST_SCALE);
         }
         return arr;
     }
