@@ -55,9 +55,9 @@ abstract class Sort {
     boolean check() {
         sort();
         boolean flag = true;
-        if(mLen!=mInts.length) return false;
+        if (mLen != mInts.length) return false;
         for (int i = 0; i < mLen - 1; i++) {
-            if (less(i + 1, i)) {
+            if (less(mInts[i + 1], mInts[i])) {
                 flag = false;
                 System.out.println(this.getClass().getName() + " " + mInts[i] + " - " + mInts[i + 1] + " = " + ((mInts[i]) - (mInts[i + 1])));
             }

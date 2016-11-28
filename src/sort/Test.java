@@ -29,14 +29,16 @@ public class Test {
         SelectionSort selectionSort = new SelectionSort(mInts);
         InsertionSort insertionSort = new InsertionSort(mInts);
         ShellSort shellSort = new ShellSort(mInts);
+        //QuickSort quickSort = new QuickSort(mInts);
 
         switch (mode) {
             case MODE_CHECK:
-                bubbleSort.check();
-                mergeSort.check();
-                selectionSort.check();
-                insertionSort.check();
-                shellSort.check();
+                System.out.println(bubbleSort.getClass().getName() + " ==> " + bubbleSort.check());
+                System.out.println(mergeSort.getClass().getName() + " ==> " + mergeSort.check());
+                System.out.println(selectionSort.getClass().getName() + " ==> " + selectionSort.check());
+                System.out.println(insertionSort.getClass().getName() + " ==> " + insertionSort.check());
+                System.out.println(shellSort.getClass().getName() + " ==> " + shellSort.check());
+                //System.out.println(quickSort.check());
                 break;
             case MODE_THREAD:
                 new Thread(() -> printTime(bubbleSort)).start();
@@ -44,6 +46,7 @@ public class Test {
                 new Thread(() -> printTime(selectionSort)).start();
                 new Thread(() -> printTime(insertionSort)).start();
                 new Thread(() -> printTime(shellSort)).start();
+                //new Thread(() -> printTime(quickSort)).start();
                 break;
             case MODE_DEFAULT:
                 long bubbleSortTime = bubbleSort.sort();
@@ -51,12 +54,13 @@ public class Test {
                 new Thread(() -> printMultiple(insertionSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(selectionSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(shellSort, bubbleSortTime)).start();
+                //new Thread(() -> printMultiple(quickSort, bubbleSortTime)).start();
                 break;
         }
     }
 
     private static void printTime(Sort sort) {
-        System.out.println(sort.getClass().getName() + " ==> " + sort.sort() + " ms" + " check: " + sort.check());
+        System.out.println(sort.getClass().getName() + " ==> " + sort.sort() + " ms");
     }
 
     private static void printMultiple(Sort sort, long index) {
@@ -71,18 +75,13 @@ public class Test {
 
     private static Integer[] getRandomArr() {
         Integer[] arr = new Integer[TEST_SCALE];
-        for (int i = 0; i < TEST_SCALE; i++) {
-            arr[i] = new Random().nextInt();
-        }
+        for (int i = 0; i < TEST_SCALE; arr[i++] = new Random().nextInt()) ;
         return arr;
     }
 
     private static Integer[] getSortedArr() {
         Integer[] arr = new Integer[TEST_SCALE];
-        for (int i = 0; i < TEST_SCALE; i++) {
-            arr[i] = i;
-        }
+        for (int i = 0; i < TEST_SCALE; arr[i++] = i) ;
         return arr;
     }
-
 }

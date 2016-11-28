@@ -28,9 +28,9 @@ public class MergeSort extends Sort {
         mergeSort(mi + 1, hi);
         //对已经有序的数组，讲时间优化到常数级别，
         //而且，测试发现，对均匀分布的随机数来说，性能也有能够优化常系数(因为输入敏感，可能对稳定性有影响）
-        if(mInts[mi]<=mInts[mi+1]) return;
+        if (mInts[mi] <= mInts[mi + 1]) return;
         //对小数组用插入排序计算来进行优化
-        if (hi - lo < mLen/50) {
+        if (hi - lo < mLen / 50) {
             insertionSort(lo, hi);
         } else {
             merge(lo, mi, hi);
@@ -38,7 +38,7 @@ public class MergeSort extends Sort {
     }
 
     private void insertionSort(int lo, int hi) {
-        for (int i = lo+1; i <=hi; i++) {
+        for (int i = lo + 1; i <= hi; i++) {
             if (mInts[i] > mInts[i - 1]) continue;
             int target = mInts[i];
             int result = search(lo, i - 1, target);
