@@ -32,8 +32,8 @@ abstract class Sort {
         mInts[j] = t;
     }
 
-    boolean less(int i, int j) {
-        return mInts[i].compareTo(mInts[j]) < 0;
+    boolean less(Integer i, Integer j) {
+        return  i.compareTo(j)<0;
     }
 
     //可以优化到 O(logN)
@@ -55,6 +55,7 @@ abstract class Sort {
     boolean check() {
         sort();
         boolean flag = true;
+        if(mLen!=mInts.length) return false;
         for (int i = 0; i < mLen - 1; i++) {
             if (less(i + 1, i)) {
                 flag = false;

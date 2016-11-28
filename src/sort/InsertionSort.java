@@ -14,13 +14,11 @@ class InsertionSort extends Sort {
     public long sort() {
         long t1 = System.currentTimeMillis();
         for (int i = 1; i < mLen; i++) {
-            for (int j = i; j > 0 && less(j, j - 1); j--) {
-                //swap(j, j - 1);
-                int target = mInts[j];
-                int result = search(0, j-1, target);
-                moveOneStep(result, j-1);
-                mInts[result] = target;
-            }
+            if(mInts[i]>mInts[i-1]) continue;
+            int target = mInts[i];
+            int result = search(0, i-1, target);
+            moveOneStep(result, i-1);
+            mInts[result] = target;
         }
         long t2 = System.currentTimeMillis();
         return t2 - t1;
