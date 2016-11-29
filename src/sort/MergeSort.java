@@ -4,10 +4,11 @@ package sort;
  * Created by simonla on 2016/11/20.
  * Have a good day!
  */
+//比快排更稳定，最坏也只有O(nlogn)
 public class MergeSort extends Sort {
     private Integer[] aux;
 
-    public MergeSort(Integer[] integers) {
+    MergeSort(Integer[] integers) {
         super(integers);
     }
 
@@ -39,7 +40,7 @@ public class MergeSort extends Sort {
 
     private void insertionSort(int lo, int hi) {
         for (int i = lo + 1; i <= hi; i++) {
-            if (mInts[i] > mInts[i - 1]) continue;
+            if (less(mInts[i - 1], mInts[i])) continue;
             int target = mInts[i];
             int result = search(lo, i - 1, target);
             moveOneStep(result, i - 1);
