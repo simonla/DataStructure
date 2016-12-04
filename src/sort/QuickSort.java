@@ -20,27 +20,19 @@ class QuickSort extends Sort {
 
     private void quickSort(int lo, int hi) {
         //递归基，并且对小数组做了优化，感觉不到10%左右的improve
-        // if (hi <= lo) return;
-        if (hi - lo <= 5) {
-            insertionSort(lo, hi);
-            return;
-        }
+        if (hi <= lo) return;
+        //if (hi - lo <= 6) {
+        //    insertionSort(lo, hi);
+        //    return;
+        //}
         int j = partition(lo, hi);
         //划分后递归调用左右两个子序
+        // TODO: 2016/11/29 可以发现，这里是尾递归，尝试使用迭代法(不知道编译器是否已经对尾递归做了优化)
         quickSort(lo, j - 1);
         quickSort(j + 1, hi);
     }
 
-    private void insertionSort(int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++) {
-            if (less(mInts[i - 1], mInts[i])) continue;
-            int target = mInts[i];
-            int result = search(lo, i - 1, target);
-            moveOneStep(result, i - 1);
-            mInts[result] = target;
-        }
-    }
-
+    // TODO: 2016/11/29 快速三向切分
     private int partition(int lo, int hi) {
         //两个指针，一个从lo开始，一个从hi开始做线性扫描
         int i = lo, j = hi + 1;
@@ -64,5 +56,15 @@ class QuickSort extends Sort {
             if (less(mInts[i + 1], mInts[i])) v = mInts[i];
         }
         return v;
+    }
+
+    private void insertionSort(int lo, int hi) {
+        for (int i = lo + 1; i <= hi; i++) {
+            if (less(mInts[i - 1], mInts[i])) continue;
+            int target = mInts[i];
+            int result = search(lo, i - 1, target);
+            moveOneStep(result, i - 1);
+            mInts[result] = target;
+        }
     }
 }

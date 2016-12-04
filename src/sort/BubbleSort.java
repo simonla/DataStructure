@@ -13,11 +13,10 @@ class BubbleSort extends Sort {
     @Override
     public long sort() {
         long t1 = System.currentTimeMillis();
-        for (int i = 0; i < mLen- 1; i++) {
+        for (int i = 0; i < mLen - 1; i++) {
             for (int j = 0; j < mLen - 1 - i; j++) {
-                if (mInts[j] > mInts[j+1]) {
-                    swap(j,j+1);
-                }
+                if (less(mInts[j + 1], mInts[j]))
+                    swap(j, j + 1);
             }
         }
         long t2 = System.currentTimeMillis();

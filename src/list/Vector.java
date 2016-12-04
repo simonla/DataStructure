@@ -1,3 +1,5 @@
+package list;
+
 import java.util.Random;
 
 /**
@@ -30,9 +32,7 @@ public class Vector {
 
     public int add(int elem,int rank) {
         expand();
-        for (int i = mElem.length; i > rank; i--) {
-            mElem[i] = mElem[i - 1];
-        }
+        System.arraycopy(mElem, rank, mElem, rank + 1, mElem.length - rank);
         mElem[rank] = elem;
         return mRank;
     }

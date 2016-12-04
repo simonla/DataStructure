@@ -6,23 +6,24 @@ import java.util.Random;
  * Created by simonla on 2016/11/20.
  * Have a good day!
  */
-public class Test {
+public class SortTest {
 
-    private static final int TEST_SCALE = 1000000;
+    private static final int TEST_SCALE = 1000/2;
 
     private static final int MODE_THREAD = 0;
     private static final int MODE_DEFAULT = 1;
     private static final int MODE_CHECK = 2;
     private static final int MODE_FAST_GROUP = 3;
+    private static final int MODE_SLOW_GROUP = 4;
 
     private static Integer[] mInts = new Integer[TEST_SCALE];
 
     public static void main(String[] args) {
+        //mInts = getRandomArr();
         mInts = getRandomArr();
-        //mInts = getSortedArr();
-        //mInts = getRepetitiveArr();
-        //new Thread(() ->doTest(MODE_DEFAULT)).start();
-        new Thread(() -> doTest(MODE_FAST_GROUP)).start();
+        doTest(MODE_CHECK);
+        //QuickSort quickSort = new QuickSort(mInts);
+        //printTime(quickSort);
     }
 
     private static void doTest(int mode) {
@@ -32,6 +33,7 @@ public class Test {
         InsertionSort insertionSort = new InsertionSort(mInts);
         ShellSort shellSort = new ShellSort(mInts);
         QuickSort quickSort = new QuickSort(mInts);
+        HeapSort heapSort = new HeapSort(mInts);
 
         switch (mode) {
             case MODE_CHECK:
@@ -40,15 +42,18 @@ public class Test {
                 System.out.println(selectionSort.getClass().getName() + " ==> " + selectionSort.check());
                 System.out.println(insertionSort.getClass().getName() + " ==> " + insertionSort.check());
                 System.out.println(shellSort.getClass().getName() + " ==> " + shellSort.check());
-                System.out.println(quickSort.check());
+                System.out.println(quickSort.getClass().getName() + " ==>" + quickSort.check());
+                System.out.println(heapSort.getClass().getName() + " ==>" + heapSort.check());
                 break;
             case MODE_THREAD:
                 new Thread(() -> printTime(bubbleSort)).start();
                 new Thread(() -> printTime(mergeSort)).start();
                 new Thread(() -> printTime(selectionSort)).start();
                 new Thread(() -> printTime(insertionSort)).start();
+
                 new Thread(() -> printTime(shellSort)).start();
                 new Thread(() -> printTime(quickSort)).start();
+                new Thread(() -> printTime(heapSort)).start();
                 break;
             case MODE_DEFAULT:
                 long bubbleSortTime = bubbleSort.sort();
@@ -57,12 +62,18 @@ public class Test {
                 new Thread(() -> printMultiple(selectionSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(shellSort, bubbleSortTime)).start();
                 new Thread(() -> printMultiple(quickSort, bubbleSortTime)).start();
+                new Thread(() -> printMultiple(heapSort, bubbleSortTime)).start();
                 break;
             case MODE_FAST_GROUP:
                 printTime(quickSort);
                 printTime(mergeSort);
                 printTime(shellSort);
+                printTime(heapSort);
                 break;
+            case MODE_SLOW_GROUP:
+                printTime(insertionSort);
+                printTime(selectionSort);
+                printTime(bubbleSort);
         }
     }
 

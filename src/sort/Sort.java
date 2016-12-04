@@ -65,7 +65,7 @@ abstract class Sort {
     int min(int i) {
         int min = i;
         for (int j = i + 1; j < mLen; j++) {
-            if (less(j, min)) min = j;
+            if (less(mInts[j], mInts[min])) min = j;
         }
         return min;
     }
