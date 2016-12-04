@@ -23,6 +23,7 @@ public class BinTree<T> {
         System.out.println(node.getData());
     }
 
+    //中序递归
     void traverSeInR(BinNode node) {
         if (node == null) return;
         traverSeInR(node.getLChild());
@@ -30,6 +31,7 @@ public class BinTree<T> {
         traverSeInR(node.getRChild());
     }
 
+    //先序递归
     void traverPreR(BinNode node) {
         if (node == null) return;
         visit(node);
@@ -37,6 +39,7 @@ public class BinTree<T> {
         traverPreR(node.getRChild());
     }
 
+    //后序递归
     void traverPostR(BinNode node) {
         if (node == null) return;
         traverPostR(node.getLChild());
@@ -44,12 +47,32 @@ public class BinTree<T> {
         visit(node);
     }
 
+    //先序迭代
     void traverPreI(BinNode node) {
         Stack<BinNode> stack = new Stack<>();
         while (true) {
             visitAlongLeftBranch(node, stack);
-            if (stack.empty()) break;
+            if(stack.empty()) break;
             node = stack.pop();
+        }
+    }
+
+    //中序迭代
+    void traverInI(BinNode node) {
+        Stack<BinNode> stack = new Stack<>();
+        while (true) {
+            goAlongLeftBranch(node, stack);
+            if(stack.empty()) break;
+            node = stack.pop();
+            visit(node);
+            node = node.getRChild();
+        }
+    }
+
+    private void goAlongLeftBranch(BinNode node, Stack<BinNode> stack) {
+        while (node != null) {
+            stack.push(node);
+            node = node.getLChild();
         }
     }
 
