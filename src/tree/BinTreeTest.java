@@ -19,6 +19,7 @@ public class BinTreeTest {
         //binTree.traverSeInR(binTree.getRoot());
         //binTree.traverPreR(binTree.getRoot());
         //binTree.traverPostR(binTree.getRoot());
-        binTree.traverInI(binTree.getRoot());
+        //binTree.traverInI(binTree.getRoot());
+        binTree.traverLevel(binTree.getRoot());
     }
 }

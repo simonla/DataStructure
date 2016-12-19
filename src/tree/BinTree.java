@@ -1,6 +1,8 @@
 package tree;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -66,6 +68,18 @@ public class BinTree<T> {
             node = stack.pop();
             visit(node);
             node = node.getRChild();
+        }
+    }
+
+    //层序遍历
+    void traverLevel(BinNode node) {
+        Queue<BinNode> queue = new LinkedList<>();
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            visit(node);
+            if(node.getLChild()!=null) queue.add(node.getLChild());
+            if(node.getRChild()!=null) queue.add(node.getRChild());
         }
     }
 
